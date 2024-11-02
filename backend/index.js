@@ -21,6 +21,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+
 // Set security headers
 app.use((req, res, next) => {
     res.setHeader(
@@ -38,9 +39,13 @@ app.use("/api/affiliation", affiliation_router);
 app.use("/api/claim-transactions", claim_transactions_router);
 app.use("/api/accounts", accounts_router);
 
-// Handle React routing, return all requests to React app
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// Handle React routing, return all requests to React app except for images
+app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/images/')) {
+        res.sendFile(path.join(__dirname, 'public', req.path));
+    } else {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    }
 });
 
 // Start the server

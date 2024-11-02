@@ -56,7 +56,7 @@ export function ClaimedSol() {
 
         </section>
         <section className='account-scanner'>
-            <img src='./solanatoken.png'></img>
+            <img src='/images/solanatoken.png'></img>
             <h2>Latest Claimed SOL</h2>
 
             <table className="claimed-sol-table" id="data-Table">

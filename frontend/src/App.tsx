@@ -48,7 +48,7 @@ function App() {
 				<section id="intro" className='hero'>
 
 					<div className="top-middle">
-						<img src="/logo.png" alt="Company Logo" style={{
+						<img src="/images/logo.png" alt="Company Logo" style={{
 							width: "320px"
 						}}/>
 					</div>

@@ -17,10 +17,10 @@ export function Header(props: HeaderComponentProps) {
         <div className='header-content'>
             <div className='links'>
                 <a href="#" id="telegram-bot-link" target="_blank" rel="noopener noreferrer" title="Telegram Bot">
-                    <img src="/telegram.png" alt="Telegram" />
+                    <img src="/images/telegram.png" alt="Telegram" />
                 </a>
                 <a href="#" id="x-account-link" target="_blank" rel="noopener noreferrer" title="Share on X">
-                    <img src="/x.png" alt="X" />
+                    <img src="/images/x.png" alt="X" />
                 </a>
             </div>
             <div className='header-actions'>
