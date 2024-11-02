@@ -237,6 +237,7 @@
 	.account-scanner {
 		padding: 30px;
 		min-height: 300px;
+		place-items: center;
 	}
 	.mode-switch-wrapper {
 		justify-content: center;
@@ -250,10 +251,11 @@
 	.account-scanner > img {
 		width: 80px;
 		inset: -40px auto auto -40px;
+		margin-bottom: 20px;
 	}
 
 	.account-scanner h2 {
-		font-size: 16px;
+		font-size: 1.4rem;
 		inset: 30px 15% auto 15%;
 		width: 70%;
 	}
@@ -294,12 +296,6 @@
 	.account-scanner > img {
 		width: 60px;
 		inset: -30px auto auto -30px;
-	}
-
-	.account-scanner h2 {
-		font-size: 14px;
-		inset: 20px 10% auto 10%;
-		width: 80%;
 	}
 
 	.wallet-wrapper {
