@@ -16,19 +16,12 @@
       "dest": "index.js"
     },
     {
-      "src": "^/assets/(.*)$",
-      "dest": "dist/assets/$1"
-    },
-    {
-      "src": "^/(?!api/?$).*\\.(ico|png|jpg|jpeg|svg|css|js|gif|woff|woff2|ttf|eot)$",
-      "dest": "dist/$1"
-    },
-    {
-      "handle": "filesystem"
+      "src": "/(.+\\.[a-z]+)$",
+      "dest": "public/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "dist/index.html"
+      "dest": "public/index.html"
     }
   ]
 }
