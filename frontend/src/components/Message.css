@@ -1,0 +1,46 @@
+
+
+
+.message {
+    box-sizing: border-box;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 12px;
+    height: fit-content;
+    width: calc(100% - 20px);
+    border: 1px solid var(--text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 20;
+    position: fixed;
+    inset: auto auto 20px 20px;
+    max-width: 300px;
+}
+
+.message p {
+    margin: 0;
+}
+
+
+/* 
+.floating-message:first-of-type {
+    display: block !important;
+} */
+
+
+.success {
+    padding: 20px;
+    background: linear-gradient(to right, var(--success-message-bg), var(--bg-color));
+}
+
+
+.warning {
+    background: linear-gradient(to right, var(--warning-message-bg), var(--bg-color));
+
+}
+
+.error {
+    background: linear-gradient(to right, var(--error-message-bg), var(--bg-color));
+
+}
+
