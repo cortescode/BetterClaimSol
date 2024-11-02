@@ -17,23 +17,23 @@
       },
       {
         "src": "/static/(.*)",
-        "dest": "public/static/$1"
+        "dest": "/static/$1"
       },
       {
         "src": "/assets/(.*)",
-        "dest": "public/assets/$1"
+        "dest": "/assets/$1"
       },
       {
         "src": "/favicon.ico",
-        "dest": "public/favicon.ico"
+        "dest": "/favicon.ico"
       },
       {
-        "src": "/manifest.json",
-        "dest": "public/manifest.json"
+        "src": "^/(.+\\.[a-zA-Z]+)$",
+        "dest": "/$1"
       },
       {
         "src": "/(.*)",
-        "dest": "public/index.html"
+        "dest": "/index.html"
       }
     ]
   }
