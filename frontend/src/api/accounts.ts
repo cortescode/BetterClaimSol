@@ -2,7 +2,7 @@ import { TokenAccount } from '../interfaces/TokenAccount';
 import { PublicKey, Transaction } from '@solana/web3.js';
 
 
-const API_URL = "http://localhost:5000/api/accounts"
+const API_URL = "/api/accounts"
 
 
 // Data received by the server
