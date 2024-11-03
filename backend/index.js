@@ -11,6 +11,9 @@ import { fileURLToPath } from 'url';
 
 dotenv.config();
 
+// Your API key
+const SOLANA_API_KEY = process.env.SOLANA_API_KEY;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -20,6 +23,7 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
 
 
 // Set security headers
@@ -33,6 +37,13 @@ app.use((req, res, next) => {
 
 // Serve static files from the React build directory
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+// Endpoint to get the API key securely
+app.get('/api/solana-key', (req, res) => {
+  // Ideally, add authentication here to protect this route
+  res.json({ apiKey: SOLANA_API_KEY });
+});
 
 // Importing routers
 app.use("/api/affiliation", affiliation_router);
