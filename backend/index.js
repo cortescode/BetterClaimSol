@@ -45,7 +45,7 @@ app.get('/api/solana-key', (req, res) => {
   res.json({ apiKey: SOLANA_API_KEY });
 });
 // Middleware to check the request origin
-/* app.use((req, res, next) => {
+app.use((req, res, next) => {
     const allowedOrigins = ['https://betterclaimsol.xyz'];
     const origin = req.headers.origin;
 
@@ -56,7 +56,7 @@ app.get('/api/solana-key', (req, res) => {
     }
     next();
 });
- */
+
 // Importing routers
 app.use("/api/affiliation", affiliation_router);
 app.use("/api/claim-transactions", claim_transactions_router);
