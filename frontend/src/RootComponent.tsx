@@ -11,7 +11,7 @@ window.Buffer = Buffer;
 const wallets = [new PhantomWalletAdapter(), new SolflareWalletAdapter()];
 
 export function RootComponent() {
-	const endpoint = "/api/solana-endpoint"
+	const endpoint = "https://betterclaimsol.xyz/api/solana-endpoint"
 	
 	return (
 		<ConnectionProvider endpoint={endpoint}>
