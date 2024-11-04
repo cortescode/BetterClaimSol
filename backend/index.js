@@ -62,6 +62,16 @@ app.use("/api/affiliation", affiliation_router);
 app.use("/api/claim-transactions", claim_transactions_router);
 app.use("/api/accounts", accounts_router);
 
+
+// Redirect all requests to the Solana endpoint
+app.use('/api/solana-endpoint', (req, res) => {
+    const solanaUrl = `https://solana-mainnet.api.syndica.io/api-key/${SOLANA_API_KEY}`;
+    res.redirect(solanaUrl);
+});
+
+
+
+
 // Handle React routing, return all requests to React app except for images
 app.get('*', (req, res, next) => {
     if (req.path.startsWith('/images/')) {
