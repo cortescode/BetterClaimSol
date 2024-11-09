@@ -140,10 +140,9 @@ export async function closeAccountWithBalanceTransaction(userPublicKey, accountP
 
     transaction.add(transferInstruction)
 
-    const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
+    const { blockhash } = await connection.getLatestBlockhash();
     transaction.recentBlockhash = blockhash;
-    transaction.lastValidBlockHeight = lastValidBlockHeight
-    
+
     if(signTransaction) {
         transaction.feePayer = keypair.publicKey;
         transaction.partialSign(keypair)
@@ -158,6 +157,7 @@ export async function closeAccountWithBalanceTransaction(userPublicKey, accountP
         referralShare: referralShare/1000000000 
     }
 }
+
 
 export async function closeAccountBunchTransaction(userPublicKey, accountPublicKeys, referral_code) {
     let user_share_percentage = USER_SHARE

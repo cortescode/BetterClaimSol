@@ -14,14 +14,15 @@ function AdvancedMode() {
     const [loading, setLoading] = useState(true)
     const [tokenAccounts, setTokenAccounts] = useState<TokenAccount[]>()
 
-    const scanTokenAccounts = useCallback(async () => {
+    const scanTokenAccounts = useCallback(async (forceReload: boolean = false) => {
+        console.log("Scanning token accounts")
         if (!publicKey) {
             return;
         }
-        const accounts = await getAccountsWithBalanceFromAddress(publicKey)
+        const accounts = await getAccountsWithBalanceFromAddress(publicKey, forceReload)
         setTokenAccounts(accounts)
         setLoading(false)
-    }, [publicKey]);
+    }, [publicKey, setTokenAccounts]);
 
     useEffect(() => {
         if(warningAccepted)

@@ -2,7 +2,7 @@ import { TokenAccount } from '../interfaces/TokenAccount';
 import { PublicKey, Transaction } from '@solana/web3.js';
 
 
-const API_URL = "/api/accounts"
+const API_URL = "http://localhost:5000/api/accounts"
 
 
 // Data received by the server
@@ -130,9 +130,10 @@ interface AddressTokensList {
 let accountsWithoutBalance: TokenAccount[] = []
 
 export async function getAccountsWithoutBalanceFromAddress(
-    userPublicKey: PublicKey
+    userPublicKey: PublicKey,
+    forceReload: boolean = false
 ): Promise<TokenAccount[]> {
-    if(accountsWithoutBalance.length > 0)
+    if(accountsWithoutBalance.length > 0 && !forceReload)
         return accountsWithoutBalance
 
     const url = "/get-accounts-without-balance-list"
@@ -141,8 +142,6 @@ export async function getAccountsWithoutBalanceFromAddress(
     }
 
     const result = await getData<AddressTokensList>(url, data)
-
-    console.log("Fetch Result: ", result)
 
     accountsWithoutBalance = result.accounts
     return result.accounts
@@ -153,10 +152,11 @@ export async function getAccountsWithoutBalanceFromAddress(
 let accountsWithBalance: TokenAccount[] = []
 
 export async function getAccountsWithBalanceFromAddress(
-    userPublicKey: PublicKey
+    userPublicKey: PublicKey,
+    forceReload: boolean = false
 ): Promise<TokenAccount[]> {
 
-    if(accountsWithBalance.length > 0)
+    if(accountsWithBalance.length > 0 && !forceReload)
         return accountsWithBalance
 
     const url = "/get-accounts-with-balance-list"
@@ -165,8 +165,6 @@ export async function getAccountsWithBalanceFromAddress(
     }
 
     const result = await getData<AddressTokensList>(url, data)
-
-    console.log("Fetch Result: ", result)
 
     accountsWithBalance = result.accounts
     return result.accounts

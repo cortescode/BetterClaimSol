@@ -150,6 +150,9 @@ accounts_router.get('/get-accounts-with-balance-list', async (req, res) => {
     for (let account of accounts.value) {
         const parsedInfo = account.account.data.parsed.info;
         const mintAddress = new PublicKey(parsedInfo.mint);
+        const tokenAddress = new PublicKey(account.pubkey);
+
+        console.log("Mint address: ", mintAddress.toBase58())
 
         let tokenName;
         let tokenSymbol;
@@ -157,17 +160,20 @@ accounts_router.get('/get-accounts-with-balance-list', async (req, res) => {
 
         try {
             // Fetch the NFT metadata using the mint address
-            const nft = (await metaplex.nfts().findByMint({ mintAddress })).json;
+            let nft = (await metaplex.nfts().findByMint({ mintAddress }));
 
+            console.log("NFT: ", nft)
+            if(nft.json)
+                nft = nft.json
             // Extract the data from the NFT metadata
             tokenName = nft.name;
             tokenSymbol = nft.symbol;
-            tokenLogo = nft.image; // URL for the token image/logo
+            tokenLogo = nft.uri; // URL for the token image/logo
 
         } catch (error) {
             console.error('Error fetching NFT metadata:', error);
             // Handle the error appropriately, possibly continue processing other accounts
-            continue;
+            
         }
 
         if (parsedInfo.tokenAmount.uiAmount > 0) {

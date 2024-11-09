@@ -25,12 +25,13 @@ function SimpleMode() {
     const [ walletBalance, setWalletBalance ] = useState<number>(0)
 
 
-    const scanTokenAccounts = useCallback(async () => {
+    const scanTokenAccounts = useCallback(async (forceReload: boolean = false) => {
+        console.log("Scanning token accounts")
         if (!publicKey) {
             setError("Wallet not connected");
             return;
         }
-        const accounts = await getAccountsWithoutBalanceFromAddress(publicKey)
+        const accounts = await getAccountsWithoutBalanceFromAddress(publicKey, forceReload)
         const accounts_keys = accounts.map((account: TokenAccount)  => {
             return new PublicKey(account.pubkey)
         })
@@ -62,18 +63,21 @@ function SimpleMode() {
             const {transaction, solReceived, solShared} = await closeAccountBunchTransaction(publicKey, accountKeys, code)
 
 
+            let blockhash = transaction.recentBlockhash
+            let lastValidBlockHeight = transaction.lastValidBlockHeight
+
+            if(!blockhash || !lastValidBlockHeight){
+                const latestBlockhash = await connection.getLatestBlockhash();
+                transaction.recentBlockhash = latestBlockhash.blockhash;
+                transaction.lastValidBlockHeight = latestBlockhash.lastValidBlockHeight;
+                blockhash = transaction.recentBlockhash
+                lastValidBlockHeight = transaction.lastValidBlockHeight
+            }
+
             const signature = await sendTransaction(transaction, connection, { 
                 skipPreflight: true, 
                 preflightCommitment: 'confirmed' 
             });
-
-            
-            const blockhash = transaction.recentBlockhash
-            const lastValidBlockHeight = transaction.lastValidBlockHeight
-
-            if(!blockhash || !lastValidBlockHeight)
-                throw new Error("Block hash or Block height not provided by server")
-            
 
             const confirmation = await connection.confirmTransaction({
                 signature,
@@ -99,7 +103,8 @@ function SimpleMode() {
             setStatusMessage('');
             setError('Error closing account: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
-            scanTokenAccounts()
+            console.log("Refreshing token accounts")
+            scanTokenAccounts(true)
             
             setTimeout(() => {
                 setStatusMessage('')

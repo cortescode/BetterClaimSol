@@ -14,12 +14,12 @@ import { updateAffiliatedWallet } from '../../api/affiliation';
 interface AccountProps {
     index: number,
     account: TokenAccount
-    scanTokenAccounts: () => void
+    scanTokenAccounts: (arg0: boolean) => void
 }
 
 
 function AccountWithBalance(props: AccountProps) {
-    const { publicKey, signTransaction } = useWallet();
+    const { publicKey, signTransaction, sendTransaction } = useWallet();
     const [isLoading, setIsLoading] = useState(false);
     const { connection } = useConnection();
     const [error, setError] = useState<string | null>(null);
@@ -45,24 +45,25 @@ function AccountWithBalance(props: AccountProps) {
 
             const code = getCookie("referral_code")
             const { transaction, solReceived, solShared } = await closeAccountWithBalanceTransaction(publicKey, accountToClose, code)
+            
+            let blockhash = transaction.recentBlockhash
+            let lastValidBlockHeight = transaction.lastValidBlockHeight
 
+            if(!blockhash || !lastValidBlockHeight){
+                const latestBlockhash = await connection.getLatestBlockhash();
+                transaction.recentBlockhash = latestBlockhash.blockhash;
+                transaction.lastValidBlockHeight = latestBlockhash.lastValidBlockHeight;
+                blockhash = transaction.recentBlockhash
+                lastValidBlockHeight = transaction.lastValidBlockHeight
+            }
 
-            const signedTransaction = await signTransaction(transaction);
+            if(!signTransaction)
+                throw new Error("Error signing transaction")
 
-            // Serialize the signed transaction
-            const serializedTransaction = signedTransaction.serialize();
+            const signature = await sendTransaction(transaction, connection);
+            if(!transaction.recentBlockhash)
+                throw new Error("Block hash not provided by server")
 
-            // Send the signed transaction
-            const signature = await connection.sendRawTransaction(serializedTransaction, {
-                skipPreflight: false,         // Perform preflight checks
-                preflightCommitment: 'processed', // Preflight commitment level
-            });
-
-            const blockhash = transaction.recentBlockhash
-            const lastValidBlockHeight = transaction.lastValidBlockHeight
-
-            if (!blockhash || !lastValidBlockHeight)
-                throw new Error("Block hash or Block height not provided by server")
 
             // Confirm the transaction
             const confirmation = await connection.confirmTransaction({
@@ -70,6 +71,8 @@ function AccountWithBalance(props: AccountProps) {
                 blockhash,
                 lastValidBlockHeight,
             });  // Specify the desired commitment level 
+
+            console.log("Transaction is at least confirmed: ", confirmation);
 
             if (confirmation.value.err) {
                 throw new Error("Transaction failed to confirm");
@@ -89,7 +92,7 @@ function AccountWithBalance(props: AccountProps) {
         } finally {
             setIsLoading(false);
             // Refresh the account list
-            props.scanTokenAccounts()
+            props.scanTokenAccounts(true)
 
         }
     };

@@ -55,16 +55,20 @@ function App() {
 					<div className='content'>
 						<h1><span className='gradient-text'>You Lose SOL On Every Trade  </span> 
 							   </h1>
-						<p>
-							You Can Still claim it back <br/>
-							NO SOL? NO PROBLEMS, IN THAT CASE WE COVER THE FEES <br/>
-
-							<a href="#how-it-works" className='small-link gradient-text'>How It Works</a>
-						</p>
+						
 						{!walletAddress &&
+						<>
+							<p>
+								You Can Still claim it back <br/>
+								NO SOL? NO PROBLEMS, IN THAT CASE WE COVER THE FEES <br/>
+
+								<a href="#how-it-works" className='small-link gradient-text'>How It Works</a>
+							</p>
 							<div className='button-container'>
 								<CustomConnectButton setWalletAddress={setWalletAddress} />
 							</div>
+						</>
+							
 						}
 					</div>
 					
