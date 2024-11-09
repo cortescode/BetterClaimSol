@@ -2,7 +2,7 @@ import { AffiliatedWallet } from "../interfaces/AffiliatedWallet";
 
 
 
-const API_URL = "http://localhost:5000"
+const API_URL = ""
 
 
 

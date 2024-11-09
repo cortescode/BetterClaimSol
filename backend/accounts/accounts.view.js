@@ -161,14 +161,16 @@ accounts_router.get('/get-accounts-with-balance-list', async (req, res) => {
         try {
             // Fetch the NFT metadata using the mint address
             let nft = (await metaplex.nfts().findByMint({ mintAddress }));
+            let nftJson = nft.json
+            tokenName = nft.name || nftJson.name;
+            tokenSymbol = nft.symbol || nftJson.symbol;
+            tokenLogo = nftJson.image; // URL for the token image/logo
 
-            console.log("NFT: ", nft)
-            if(nft.json)
-                nft = nft.json
-            // Extract the data from the NFT metadata
-            tokenName = nft.name;
-            tokenSymbol = nft.symbol;
-            tokenLogo = nft.uri; // URL for the token image/logo
+            // Check if the tokenLogo is an IPFS URI or a direct URL
+            if (tokenLogo && tokenLogo.startsWith('ipfs://')) {
+                // Convert IPFS URI to a gateway URL
+                tokenLogo = tokenLogo.replace('ipfs://', 'https://ipfs.io/ipfs/');
+            }
 
         } catch (error) {
             console.error('Error fetching NFT metadata:', error);
