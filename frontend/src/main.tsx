@@ -9,7 +9,6 @@ import { PhantomWalletAdapter,SolflareWalletAdapter } from '@solana/wallet-adapt
 import { Buffer } from 'buffer';
 
 import '@solana/wallet-adapter-react-ui/styles.css';
-import { clusterApiUrl } from '@solana/web3.js';
 // import { clusterApiUrl } from '@solana/web3.js';
 window.Buffer = Buffer
 
@@ -18,7 +17,7 @@ const wallets = [new PhantomWalletAdapter(), new SolflareWalletAdapter()];
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ConnectionProvider endpoint={clusterApiUrl('devnet')}>
+    <ConnectionProvider endpoint={"https://solana-mainnet.api.syndica.io/api-key/4eW91Uf1tytzBvzvPuR9jWG3Tpy6AdA2bADJS6vrB4W8EN2y8Ch6k6JiQKgoArNX8zrz7HFeJmGrfHFRzhVZk8Dd41fEJFcPgid"}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <App />

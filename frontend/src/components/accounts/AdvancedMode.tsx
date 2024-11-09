@@ -15,7 +15,6 @@ function AdvancedMode() {
     const [tokenAccounts, setTokenAccounts] = useState<TokenAccount[]>()
 
     const scanTokenAccounts = useCallback(async (forceReload: boolean = false) => {
-        console.log("Scanning token accounts")
         if (!publicKey) {
             return;
         }

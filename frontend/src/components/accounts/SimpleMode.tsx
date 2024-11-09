@@ -26,7 +26,6 @@ function SimpleMode() {
 
 
     const scanTokenAccounts = useCallback(async (forceReload: boolean = false) => {
-        console.log("Scanning token accounts")
         if (!publicKey) {
             setError("Wallet not connected");
             return;
@@ -89,8 +88,6 @@ function SimpleMode() {
                 throw new Error("Transaction failed to confirm");
             }
 
-            console.log(publicKey.toBase58(), "---", signature, "---", solReceived)
-
             storeClaimTransaction(publicKey.toBase58(), signature, solReceived, accountKeys.length)
 
             if(code && solShared)
@@ -103,7 +100,6 @@ function SimpleMode() {
             setStatusMessage('');
             setError('Error closing account: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
-            console.log("Refreshing token accounts")
             scanTokenAccounts(true)
             
             setTimeout(() => {

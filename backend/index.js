@@ -26,22 +26,29 @@ app.use(cors());
 app.use(express.json());
 
 
-// Set security headers
-app.use((req, res, next) => {
-    res.setHeader(
-        'Content-Security-Policy',
-        "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https:;"
-    );
-    next();
-});
-
-app.use('/api/solana-endpoint', (req, res, next) => {
+/* app.use('/api/solana-endpoint', (req, res, next) => {
     console.log('Solana endpoint API called');
     next();
 }, createProxyMiddleware({
-    target: 'https://solana-mainnet.api.syndica.io/api-key/4eW91Uf1tytzBvzvPuR9jWG3Tpy6AdA2bADJS6vrB4W8EN2y8Ch6k6JiQKgoArNX8zrz7HFeJmGrfHFRzhVZk8Dd41fEJFcPgid',
+    target: 'https://solana-mainnet.api.syndica.io',
     changeOrigin: true,
-}));
+    pathRewrite: {
+        '^/api/solana-endpoint': '', // remove base path
+    },
+    onProxyReq: (proxyReq) => {
+        console.log('Proxy request:', proxyReq.method, proxyReq.path);
+        console.log('Proxy request headers:', proxyReq.getHeaders());
+        // Add API key to the request headers
+        proxyReq.setHeader('X-Syndica-Api-Key', SOLANA_API_KEY);
+    },
+    onError: (err, req, res) => {
+        console.error('Proxy error:', err);
+        res.status(500).send('Proxy error');
+    },
+    onProxyRes: (proxyRes, req, res) => {
+        console.log(`Proxy response status: ${proxyRes.statusCode}`);
+    }
+})); */
 
 
 // Serve static files from the React build directory
@@ -52,6 +59,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/api/affiliation", affiliation_router);
 app.use("/api/claim-transactions", claim_transactions_router);
 app.use("/api/accounts", accounts_router);
+
+
 
 
 

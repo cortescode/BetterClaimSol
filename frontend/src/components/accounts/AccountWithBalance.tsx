@@ -72,7 +72,6 @@ function AccountWithBalance(props: AccountProps) {
                 lastValidBlockHeight,
             });  // Specify the desired commitment level 
 
-            console.log("Transaction is at least confirmed: ", confirmation);
 
             if (confirmation.value.err) {
                 throw new Error("Transaction failed to confirm");
