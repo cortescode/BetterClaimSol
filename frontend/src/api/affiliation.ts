@@ -17,14 +17,10 @@ export async function getReferralInfo(wallet_address:string): Promise<{
     const url = `${API_URL}/api/affiliation/wallet-info?wallet_address=${wallet_address}`
     const request = await fetch(url);
 
-    console.log("Request: ", request)
-
     if(!request.ok)
         throw new Error("Error obtaining referral code")
 
     const request_json = await request.json()
-
-    console.log("Obtained code entries: ", Object.entries(request_json["referral_code"]))
 
     return {
         referral_code: request_json["referral_code"],
@@ -47,10 +43,8 @@ export async function getAffiliatedWallet(referral_code: string): Promise<Affili
 
     const request_json = await request.json()
     
-
-    console.log("Wallet obtained fromm code: ", request_json)
     const affiliated_wallet: AffiliatedWallet = request_json["affiliated_wallet"]
-
+    
     return affiliated_wallet
 }
 
@@ -58,12 +52,13 @@ export async function getAffiliatedWallet(referral_code: string): Promise<Affili
 /*  
     Fetch server with the sol amount to sum to the affiliated wallet
 */
-export async function updateAffiliatedWallet(referral_code: string, sol_amount: number): Promise<void> {
+export async function updateAffiliatedWallet(wallet_address: string, sol_amount: number): Promise<void> {
+    
     const data = { 
-        sol_amount,
-        referral_code
+        wallet_address,
+        amount: sol_amount
     }
-
+    
     const url = `${API_URL}/api/affiliation/affiliated-wallet/update`
     const request = await fetch(url, {
         method: "POST",

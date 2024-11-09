@@ -79,9 +79,9 @@ function AccountWithBalance(props: AccountProps) {
 
             storeClaimTransaction(publicKey.toBase58(), signature, solReceived)
 
-            if (code && solShared)
-                updateAffiliatedWallet(code, solShared)
-
+            if (code && solShared){
+                await updateAffiliatedWallet(publicKey.toBase58(), solShared)
+            }
             setStatusMessage(`Account closed successfully. Signature: ${signature}`);
             // Refresh the account list
         } catch (err) {
@@ -91,7 +91,9 @@ function AccountWithBalance(props: AccountProps) {
         } finally {
             setIsLoading(false);
             // Refresh the account list
-            props.scanTokenAccounts(true)
+            setTimeout(() => {
+                props.scanTokenAccounts(true)
+            }, 3000);
 
         }
     };

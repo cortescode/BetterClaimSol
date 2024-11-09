@@ -37,13 +37,12 @@ export function Affiliation(props: AffiliationProps) {
     })
 
     useEffect(() => {
-        console.log("wallet address: ", props.walletAddress)
+        
         if (!props.walletAddress)
             return
 
         getReferralInfo(props.walletAddress)
             .then((referralInfo) => {
-                console.log("Referral info: ", referralInfo)
                 if (referralInfo["referral_code"])
                     setReferralCode(referralInfo["referral_code"])
                 if (referralInfo["sol_received"])
@@ -100,6 +99,8 @@ export function Affiliation(props: AffiliationProps) {
                 <p style={{
                     marginBottom: "40px"
                 }}>Earn sol by bringing people to <b>betterclaimsol.xyz</b></p>
+
+                <span style={{display: "block", fontSize: "0.8rem", lineHeight: "1em"}}>You need a minimum amount of Sol in your wallet to receive rewards</span>
 
                 <div style={{
                     marginTop: "20px",

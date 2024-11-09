@@ -13,7 +13,6 @@ affiliation_router.get('/wallet-info', async (req, res) => {
     
     const {code, solReceived} = await getReferralCode(wallet_address);
 
-
     if(code) res.status(200).json({
         referral_code: code,
         sol_received: solReceived

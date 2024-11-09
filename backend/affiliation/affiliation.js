@@ -17,14 +17,12 @@ export async function getReferralCode(wallet_address) {
 
     if(affiliated_wallets.rowCount > 0){
         code = affiliated_wallets.rows[0]["referral_code"]
-        solReceived = affiliated_wallets.rows[0]["referral_code"] | 0
+        solReceived = affiliated_wallets.rows[0]["sol_received"] || 0
     } else {
         code = generateReferralCode()
         await createAffiliatedWallet(wallet_address, code)
         solReceived = 0
     }
-
-    console.log("Sol received: ", solReceived)
 
     return {code, solReceived}
 }
@@ -46,7 +44,6 @@ export async function updateAffiliatedWallet(wallet_address, amount) {
 }
 
 
-// Endpoint to get the last 20 claim transactions
 export async function getAffiliatedWallet(referral_code) {
     let affiliated_wallet;
 
@@ -54,7 +51,6 @@ export async function getAffiliatedWallet(referral_code) {
         'SELECT * FROM affiliated_wallets WHERE referral_code = $1',
         [ referral_code ]
     );
-
     if(affiliated_wallets.rowCount > 0)
         affiliated_wallet = affiliated_wallets.rows[0]
     else 

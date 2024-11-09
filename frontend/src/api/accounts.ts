@@ -29,7 +29,6 @@ async function postData<T>(url: string, data: object): Promise<T> {
         },
         body: JSON.stringify(data),
     });
-    console.log("response obtained: ", response)
     return response.json();
 }
 
@@ -48,8 +47,6 @@ async function getData<T>(url: string, params: object): Promise<T> {
             'Content-Type': 'application/json',
         },
     });
-    console.log("response obtained: ", response);
-
     // Return the response as JSON
     return response.json();
 }
@@ -117,7 +114,7 @@ export async function closeAccountBunchTransaction(
     return {
         transaction: deserializeTransaction(result.transaction),
         solReceived: result.solReceived,
-        solShared: result.solReceived
+        solShared: result.solShared
     }
 }
 

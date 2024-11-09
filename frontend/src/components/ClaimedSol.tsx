@@ -62,8 +62,8 @@ export function ClaimedSol() {
             <table className="claimed-sol-table" id="data-Table">
                 <thead>
                     <tr>
-                        <th>Wallet</th>
-                        <th>Accts</th>
+                        <th>Transaction id</th>
+                        <th>Accounts Closed</th>
                         <th>Claimed SOL</th>
                         <th>Date</th>
                     </tr>
@@ -71,7 +71,11 @@ export function ClaimedSol() {
                 <tbody>
                     {claimedSOL.map((claim, index) => (
                         <tr key={index}>
-                            <td>{claim.wallet_address}</td>
+                            <td>
+                                <a target="_blank" href={"https://solscan.io/tx/"+claim.transaction_id}>
+                                    {claim.transaction_id}
+                                </a>
+                            </td>
                             <td>{claim.accounts_closed}</td>
                             <td>{claim.sol_received.toString().substring(0, 7)} SOL</td>
                             <td>{(new Date(claim.claimed_at).toLocaleString())}</td>

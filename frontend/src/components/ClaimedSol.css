@@ -28,6 +28,7 @@
 .claimed-sol-table td {
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: center;
 }
 
 

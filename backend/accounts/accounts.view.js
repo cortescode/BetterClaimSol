@@ -131,8 +131,6 @@ accounts_router.get('/get-accounts-without-balance-list', async (req, res) => {
 accounts_router.get('/get-accounts-with-balance-list', async (req, res) => {
     const address = req.query['wallet_address'] ? new PublicKey( req.query['wallet_address']) : null
 
-    console.log("Executed")
-
     if(!address)
         res.status(400).json({error:'No address provided'})
 
@@ -150,9 +148,6 @@ accounts_router.get('/get-accounts-with-balance-list', async (req, res) => {
     for (let account of accounts.value) {
         const parsedInfo = account.account.data.parsed.info;
         const mintAddress = new PublicKey(parsedInfo.mint);
-        const tokenAddress = new PublicKey(account.pubkey);
-
-        console.log("Mint address: ", mintAddress.toBase58())
 
         let tokenName;
         let tokenSymbol;
@@ -189,8 +184,6 @@ accounts_router.get('/get-accounts-with-balance-list', async (req, res) => {
             });
         }
     }
-
-    console.log("Processed accounts: ", processedAccounts)
 
     res.status(200).json({"accounts": processedAccounts})
 })

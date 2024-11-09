@@ -91,7 +91,7 @@ function SimpleMode() {
             storeClaimTransaction(publicKey.toBase58(), signature, solReceived, accountKeys.length)
 
             if(code && solShared)
-                updateAffiliatedWallet(code, solShared)
+                await updateAffiliatedWallet(publicKey.toBase58(), solShared)
 
             setStatusMessage(`Account closed successfully. Signature: ${signature}`);
             // Refresh the account list
@@ -100,9 +100,9 @@ function SimpleMode() {
             setStatusMessage('');
             setError('Error closing account: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
-            scanTokenAccounts(true)
             
             setTimeout(() => {
+                scanTokenAccounts(true)
                 setStatusMessage('')
                 setError('')
             }, 3000) 

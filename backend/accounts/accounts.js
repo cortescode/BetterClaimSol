@@ -149,12 +149,11 @@ export async function closeAccountWithBalanceTransaction(userPublicKey, accountP
     } else
         transaction.feePayer = userPublicKey;
 
-
     // Divide by 1000000000 to convert lamports into solana
     return { 
         transaction, 
         solReceived: userShare / 1000000000, 
-        referralShare: referralShare/1000000000 
+        solShared: referralShare/1000000000 
     }
 }
 
@@ -228,7 +227,7 @@ export async function closeAccountBunchTransaction(userPublicKey, accountPublicK
     return { 
         transaction, 
         solReceived: userShare / 1000000000, 
-        referralShare: referralShare / 1000000000 
+        solShared: referralShare / 1000000000 
     }
 }
 
