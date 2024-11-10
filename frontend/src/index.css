@@ -4,7 +4,7 @@
 	--header-bg: #e3e8ff;
 	--scanner-bg: #d4e7ff;
 	--button-bg: #191919;
-	--button-bg-hover: #005744;
+	--button-bg-hover: #bb32c5;
 	--button-text: #ffffff;
 	--table-border: #ddd;
 	--table-header-bg: #e3e8ff;
@@ -16,7 +16,7 @@
 
 	--shadow-color: #4a1d64;
 
-	--account-color: #b7f3de;
+	--account-color: rgb(254, 238, 255);
 
 	--success-message-bg: white;
 	--warning-message-bg: rgb(255, 219, 152);

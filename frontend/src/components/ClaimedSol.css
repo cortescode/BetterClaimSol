@@ -31,7 +31,9 @@
     text-align: center;
 }
 
-
+.claimed-sol-table th {
+    font-weight: lighter;
+}
 
 .record-columns-wrapper {
 	width: 100%;
@@ -77,6 +79,11 @@
     .claimed-sol-table td {
         font-size: 0.8rem;
     }
+
+    .claimed-sol-table th {
+        font-size: 0.8rem;
+    }
+    
 }
 
 @media screen and (max-width: 480px) {
@@ -96,6 +103,11 @@
     .claimed-sol-table td {
         padding: 0.3rem;
     }
+
+    .claimed-sol-table th {
+        font-size: 0.7rem;
+    }
+    
 }
 
 /* Additional responsive adjustments for even smaller screens */

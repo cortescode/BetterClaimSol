@@ -21,7 +21,7 @@ body {
 
 	font-family: Arial, sans-serif;
 
-	background: radial-gradient(at left top, var(--pink), var(--bg-color) 35%);
+	background: var(--bg-color);
 	background-size: 140%;
 	background-position: 100%;
 	background-attachment: fixed;
