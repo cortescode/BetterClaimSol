@@ -25,7 +25,7 @@
     },
     {
       "src": "/privacy-policy",
-      "dest": "public/provacy-policy.html"
+      "dest": "public/privacy-policy.html"
     },
     {
       "src": "/(.*)",
