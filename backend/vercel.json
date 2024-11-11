@@ -24,6 +24,10 @@
       "dest": "public/$1"
     },
     {
+      "src": "/privacy-policy",
+      "dest": "public/provacy-policy.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "public/index.html"
     }
