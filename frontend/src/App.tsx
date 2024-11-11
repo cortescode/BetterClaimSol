@@ -48,7 +48,7 @@ function App() {
 				<section id="intro" className='hero'>
 
 					<div className="top-middle">
-						<img src="/images/logo.png" alt="Company Logo" style={{
+						<img src="/images/logo.webp" alt="Company Logo" style={{
 							width: "320px"
 						}}/>
 					</div>
@@ -59,8 +59,8 @@ function App() {
 						{!walletAddress &&
 						<>
 							<p>
-								You Can Still claim it back <br/>
-								NO SOL? NO PROBLEMS, IN THAT CASE WE COVER THE FEES <br/>
+								Close unused accounts — whether they’re empty or still holding tokens. <br/>
+								No SOL? No Problem. In that case we’ll cover the fees! <br/>
 
 								<a href="#how-it-works" className='small-link gradient-text'>How It Works</a>
 							</p>

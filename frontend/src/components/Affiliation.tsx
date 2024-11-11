@@ -98,9 +98,9 @@ export function Affiliation(props: AffiliationProps) {
             <article className={`affiliation ${affiliationOpen ? 'affiliation-visible' : 'affiliation-hidden'}`}>
                 <p style={{
                     marginBottom: "40px"
-                }}>Earn sol by bringing people to <b>betterclaimsol.xyz</b></p>
+                }}><b>Earn SOL by Bringing Friends!</b></p>
 
-                <span style={{display: "block", fontSize: "0.8rem", lineHeight: "1em"}}>You need a minimum amount of Sol in your wallet to receive rewards</span>
+                <span style={{display: "block", fontSize: "0.8rem", lineHeight: "1em"}}>You’ll need at least 0.002 SOL in your wallet to receive rewards</span>
 
                 <div style={{
                     marginTop: "20px",

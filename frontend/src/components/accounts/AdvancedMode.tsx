@@ -38,7 +38,7 @@ function AdvancedMode() {
                         You are about to enter Advanced Mode. This mode allows you to perform advanced operations such as close accounts with balance.
                         Please ensure you understand the implications before proceeding.
                     </p>
-                    <button onClick={() => setWarningAccepted(true)}>I know what I do</button>
+                    <button onClick={() => setWarningAccepted(true)}>I know what I am doing</button>
                 </div>
             }
 

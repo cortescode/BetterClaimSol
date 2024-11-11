@@ -75,7 +75,11 @@ app.use("/api/accounts", accounts_router);
 
 
 
-// Handle React routing, return all requests to React app except for images
+// Handle React routing, return all requests to React app except for images and privacy-policy
+app.get('/privacy-policy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'privacy-policy.html'));
+});
+
 app.get('*', (req, res, next) => {
     if (req.path.startsWith('/images/')) {
         res.sendFile(path.join(__dirname, 'public', req.path));
