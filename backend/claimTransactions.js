@@ -6,6 +6,8 @@ import {pool} from './db/pool.js'; // Make sure to import your database pool
 export const claim_transactions_router = express.Router();
 
 
+claim_transactions_router.use(express.json());
+
 // Endpoint to add an element to the database
 claim_transactions_router.get('/', async (req, res) => {
     

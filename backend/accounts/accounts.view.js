@@ -8,6 +8,7 @@ import { Metaplex } from "@metaplex-foundation/js";
 
 
 export const accounts_router = express.Router();
+accounts_router.use(express.json());
 
 // Endpoint to close a single account
 accounts_router.post('/close-account', async (req, res) => {

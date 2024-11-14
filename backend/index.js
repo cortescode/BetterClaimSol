@@ -3,13 +3,14 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import createTables from './db/createTables.js';
+import http from 'http';
 import { affiliation_router } from './affiliation/affiliation.view.js';
 import { claim_transactions_router } from './claimTransactions.js';
 import { accounts_router } from './accounts/accounts.view.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createProxyMiddleware } from "http-proxy-middleware";
-
+import bodyParser from 'body-parser';
 
 dotenv.config();
 
@@ -23,33 +24,44 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(express.json());
+// app.use(express.json()); let the proxy middleware frozen when call
+console.log('SOLANA_API_KEY:', SOLANA_API_KEY);
 
-
-/* app.use('/api/solana-endpoint', (req, res, next) => {
-    console.log('Solana endpoint API called');
-    next();
-}, createProxyMiddleware({
-    target: 'https://solana-mainnet.api.syndica.io',
+const solanaProxy = createProxyMiddleware({
+    target: `https://solana-mainnet.api.syndica.io/`,
     changeOrigin: true,
     pathRewrite: {
-        '^/api/solana-endpoint': '', // remove base path
+        '^/api/solana-endpoint': `/api-key/${SOLANA_API_KEY}`,
     },
-    onProxyReq: (proxyReq) => {
-        console.log('Proxy request:', proxyReq.method, proxyReq.path);
-        console.log('Proxy request headers:', proxyReq.getHeaders());
-        // Add API key to the request headers
-        proxyReq.setHeader('X-Syndica-Api-Key', SOLANA_API_KEY);
-    },
+    secure: false,
+    ws: true,
     onError: (err, req, res) => {
         console.error('Proxy error:', err);
-        res.status(500).send('Proxy error');
-    },
-    onProxyRes: (proxyRes, req, res) => {
-        console.log(`Proxy response status: ${proxyRes.statusCode}`);
+        if (res.writeHead) {
+            res.status(500).json({ error: 'Proxy error', details: err.message });
+        }
     }
-})); */
+});
 
+
+app.use(
+    '/api/solana-endpoint',
+    (req, res, next) => {
+        // Set headers early
+        req.headers['X-Syndica-Api-Key'] = SOLANA_API_KEY;
+        next();
+    }, 
+    solanaProxy
+);
+
+
+const server = http.createServer(app);
+// Handle WebSocket upgrade
+server.on('upgrade', function (req, socket, head) {
+    if (req.url.startsWith('/api/solana-endpoint')) {
+        solanaProxy.upgrade(req, socket, head);
+    }
+});
 
 // Serve static files from the React build directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -59,19 +71,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/api/affiliation", affiliation_router);
 app.use("/api/claim-transactions", claim_transactions_router);
 app.use("/api/accounts", accounts_router);
-
-
-
-
-
-// Redirect all requests to the Solana endpoint
-/* app.use('/api/solana-endpoint', (req, res) => {
-    // https://solana-mainnet.api.syndica.io/api-key/4eW91Uf1tytzBvzvPuR9jWG3Tpy6AdA2bADJS6vrB4W8EN2y8Ch6k6JiQKgoArNX8zrz7HFeJmGrfHFRzhVZk8Dd41fEJFcPgid
-    // const solanaUrl = `https://solana-mainnet.g.alchemy.com/v2/WaqVWK-Tn7Jcx6MQu3a4viaE8EyVl2cq`;
-    const solanaUrl= 'https://solana-mainnet.api.syndica.io/api-key/4eW91Uf1tytzBvzvPuR9jWG3Tpy6AdA2bADJS6vrB4W8EN2y8Ch6k6JiQKgoArNX8zrz7HFeJmGrfHFRzhVZk8Dd41fEJFcPgid';
-    res.redirect(solanaUrl);
-});  */
-
 
 
 
@@ -89,7 +88,7 @@ app.get('*', (req, res, next) => {
 });
 
 // Start the server
-app.listen(port, async () => {
+server.listen(port, async () => {
     await createTables();
     console.log(`Server running on port ${port}`);
 });

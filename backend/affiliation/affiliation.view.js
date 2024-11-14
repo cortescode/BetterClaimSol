@@ -3,6 +3,7 @@ import { getAffiliatedWallet, getReferralCode, updateAffiliatedWallet } from "./
 
 export const affiliation_router = express.Router();
 
+affiliation_router.use(express.json());
 
 affiliation_router.get('/wallet-info', async (req, res) => {
     const wallet_address = req.query["wallet_address"];
