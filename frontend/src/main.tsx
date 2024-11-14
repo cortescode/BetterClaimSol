@@ -17,7 +17,9 @@ const wallets = [new PhantomWalletAdapter(), new SolflareWalletAdapter()];
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ConnectionProvider endpoint={"https://solana-mainnet.api.syndica.io/api-key/4eW91Uf1tytzBvzvPuR9jWG3Tpy6AdA2bADJS6vrB4W8EN2y8Ch6k6JiQKgoArNX8zrz7HFeJmGrfHFRzhVZk8Dd41fEJFcPgid"}>
+    <ConnectionProvider endpoint={"http://localhost:5000/api/solana-endpoint"} config={{
+        wsEndpoint: "ws://localhost:5000/api/solana-endpoint"
+      }}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <App />
@@ -27,33 +29,3 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   </React.StrictMode>
 );
 
-
-/* 
-
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <ConnectionProvider endpoint="https://solana-mainnet.g.alchemy.com/v2/XJCycXyfmZlcEEqUoeNkPHMtSF6ZHJsZ">
-      <WalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>
-          <App />
-        </WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
-  </React.StrictMode>
-);
-
-
-*/
-
-
-// ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-//   <React.StrictMode>
-//     <ConnectionProvider endpoint={clusterApiUrl('devnet', true)}>
-//       <WalletProvider wallets={wallets} autoConnect>
-//         <WalletModalProvider>
-//           <App />
-//         </WalletModalProvider>
-//       </WalletProvider>
-//     </ConnectionProvider>
-//   </React.StrictMode>
-// );

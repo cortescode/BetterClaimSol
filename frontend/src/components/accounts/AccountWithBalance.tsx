@@ -19,7 +19,7 @@ interface AccountProps {
 
 
 function AccountWithBalance(props: AccountProps) {
-    const { publicKey, signTransaction, sendTransaction } = useWallet();
+    const { publicKey, signTransaction } = useWallet();
     const [isLoading, setIsLoading] = useState(false);
     const { connection } = useConnection();
     const [error, setError] = useState<string | null>(null);
@@ -41,6 +41,8 @@ function AccountWithBalance(props: AccountProps) {
             setError(null);
             setStatusMessage("Processing transaction...");
 
+            console.log("Public key: ", publicKey.toBase58())
+
             const accountToClose = new PublicKey(accountPubkey);
 
             const code = getCookie("referral_code")
@@ -60,7 +62,18 @@ function AccountWithBalance(props: AccountProps) {
             if(!signTransaction)
                 throw new Error("Error signing transaction")
 
-            const signature = await sendTransaction(transaction, connection);
+            
+            const signedTransaction = await signTransaction(transaction);
+
+            // Serialize the signed transaction
+            const serializedTransaction = signedTransaction.serialize();
+
+            // Send the signed transaction
+            const signature = await connection.sendRawTransaction(serializedTransaction, {
+                skipPreflight: false,         // Perform preflight checks
+                preflightCommitment: 'confirmed', // Preflight commitment level
+            });
+
             if(!transaction.recentBlockhash)
                 throw new Error("Block hash not provided by server")
 

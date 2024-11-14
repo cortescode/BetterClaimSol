@@ -33,11 +33,8 @@ export function CustomConnectButton({ setWalletAddress }: CustomConnectButtonPro
 	if (connected) {
 		buttonClass = ''
 		label = 'Disconnect';
-	} else if (connecting) {
-		buttonClass = ''
-		label = 'Connecting';
 	} else if (wallet) {
-		buttonClass = ''
+		buttonClass = 'cta-button'
 		label = 'Connect';
 	} else {
 		buttonClass = 'cta-button'
